@@ -19,10 +19,11 @@ export function Cards({ books }: CardProps) {
         <Card key={b._id} className='mt-6 w-80'>
           <CardBody>
             <Typography variant='h5' color='blue-gray' className='mb-2'>
-              {b?.publisher.name}
+              {b.title}
             </Typography>
+            <Typography>{b.publisher.name}</Typography>
             <Typography>{b.genre}</Typography>
-            <Typography>{b.publicationYear}</Typography>
+            <Typography>Publication Date: {b.publicationYear}</Typography>
           </CardBody>
           <CardFooter className='pt-0'>
             <Link to={`/books/${b._id}`} relative='path'>
