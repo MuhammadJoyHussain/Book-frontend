@@ -1,7 +1,7 @@
 import { Button } from "@material-tailwind/react"
 import { Link } from "react-router-dom"
 
-const Signup = () => {
+const Login = () => {
   return (
 <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
   <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -30,17 +30,17 @@ const Signup = () => {
       </div>
 
       <div>
-      <Button type="submit" className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm">Signup</Button>
+        <Button type="submit" className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm">Login</Button>
       </div>
     </form>
 
     <p className="mt-10 text-center text-sm text-gray-500">
-      Have an account? 
-      <Link to='/login' className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"> Login</Link>
+      Don't have an account? 
+      <Link to='/signup' className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"> Signup</Link>
     </p>
   </div>
 </div>
   )
 }
 
-export default Signup
+export default Login
