@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import {
   Navbar,
   Collapse,
@@ -7,17 +7,38 @@ import {
   IconButton,
 } from '@material-tailwind/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAppSelector } from '../redux/hooks'
+import { useDispatch } from 'react-redux'
+import { useLogoutMutation } from '../redux/slices/userApiSlices'
+import { logout } from '../redux/slices/authSlice'
 
 export default function Nav() {
-  const [openNav, setOpenNav] = React.useState(false)
+  const [openNav, setOpenNav] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener(
       'resize',
       () => window.innerWidth >= 960 && setOpenNav(false)
     )
   }, [])
+
+  const { userInfo } = useAppSelector((state) => state.auth)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const [logoutApiCall] = useLogoutMutation()
+
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap()
+      dispatch(logout())
+      navigate('/login')
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   return (
     <Navbar className='mx-auto max-w-screen-xl px-4 py-2'>
@@ -32,16 +53,30 @@ export default function Nav() {
         </Typography>
         <div className='hidden lg:block'></div>
         <div className='hidden gap-2 lg:flex'>
-          <Link to='/login'>
-            <Button variant='text' size='sm' color='blue-gray'>
-              Login
+          {userInfo ? (
+            <Button
+              onClick={logoutHandler}
+              variant='text'
+              size='sm'
+              color='blue-gray'
+            >
+              Logout
             </Button>
-          </Link>
-          <Link to='/signup'>
-            <Button variant='gradient' size='sm'>
-              Sign Up
-            </Button>
-          </Link>
+          ) : (
+            <>
+              <Link to='/login'>
+                <Button variant='text' size='sm' color='blue-gray'>
+                  Login
+                </Button>
+              </Link>
+
+              <Link to='/signup'>
+                <Button variant='gradient' size='sm'>
+                  Sign Up
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
         <IconButton
           variant='text'
@@ -58,12 +93,30 @@ export default function Nav() {
       </div>
       <Collapse open={openNav}>
         <div className='flex w-full flex-nowrap items-center gap-2 lg:hidden'>
-          <Button variant='outlined' size='sm' color='blue-gray' fullWidth>
-            Sign In
-          </Button>
-          <Button variant='gradient' size='sm' fullWidth>
-            Sign Up
-          </Button>
+          {userInfo ? (
+            <Button
+              onClick={logoutHandler}
+              variant='text'
+              size='sm'
+              color='blue-gray'
+            >
+              Logout
+            </Button>
+          ) : (
+            <>
+              <Link to='/login'>
+                <Button variant='text' size='sm' color='blue-gray'>
+                  Login
+                </Button>
+              </Link>
+
+              <Link to='/signup'>
+                <Button variant='gradient' size='sm'>
+                  Sign Up
+                </Button>
+              </Link>
+            </>
+          )}
         </div>
       </Collapse>
     </Navbar>
