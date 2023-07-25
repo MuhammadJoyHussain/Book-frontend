@@ -1,11 +1,20 @@
 import { useParams } from 'react-router-dom'
 import { useGetBooksDetailsQuery } from '../../redux/slices/bookApiSlice'
 import img from '../../assets/image.jpg'
+import { useAppSelector } from '../../redux/hooks'
+import jwt_decode from 'jwt-decode'
+import { Button } from '@material-tailwind/react'
 
 const BookDetails = () => {
   const { id: booksId } = useParams()
 
   const { data: product } = useGetBooksDetailsQuery(booksId)
+
+  const { userInfo } = useAppSelector((state) => state.auth)
+
+  const decodeToken = jwt_decode(userInfo.data.accessToken)
+
+  const { _id } = decodeToken
 
   return (
     <div className='max-w-sm w-full lg:max-w-full lg:flex'>
@@ -38,6 +47,18 @@ const BookDetails = () => {
               {product?.data.publisher.name}
             </p>
             <p className='text-gray-600'>{product?.data.publicationYear}</p>
+          </div>
+          <div>
+            {_id === product?.data.user ? (
+              <div className='ml-5'>
+                <Button size='sm'>Edit</Button>
+                <Button color='red' size='sm' className='ml-2'>
+                  Delete
+                </Button>
+              </div>
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </div>

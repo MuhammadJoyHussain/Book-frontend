@@ -18,11 +18,11 @@ export function Cards({ books }: CardProps) {
       {books?.map((b) => (
         <Card key={b._id} className='mt-6 w-80'>
           <CardBody>
-            <Typography variant='h5' color='blue-gray' className='mb-2'>
-              {b.title}
+            <Typography variant='h6' color='blue-gray' className='mb-2'>
+              Book Title: {b.title}
             </Typography>
-            <Typography>{b.publisher.name}</Typography>
-            <Typography>{b.genre}</Typography>
+            <Typography>Author Name: {b.publisher.name}</Typography>
+            <Typography>Genre: {b.genre}</Typography>
             <Typography>Publication Date: {b.publicationYear}</Typography>
           </CardBody>
           <CardFooter className='pt-0'>

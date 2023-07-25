@@ -20,7 +20,25 @@ export const booksApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    createBook: builder.mutation<
+      IBook,
+      { data: Partial<IBook>; accessToken: string }
+    >({
+      query: ({ data, accessToken }) => ({
+        url: `${BOOKS_URL}/create-book`,
+        method: 'POST',
+        body: data,
+        headers: {
+          Authorization: accessToken,
+        },
+      }),
+      invalidatesTags: ['books'],
+    }),
   }),
 })
 
-export const { useGetBooksQuery, useGetBooksDetailsQuery } = booksApiSlice
+export const {
+  useGetBooksQuery,
+  useGetBooksDetailsQuery,
+  useCreateBookMutation,
+} = booksApiSlice

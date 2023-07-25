@@ -54,14 +54,22 @@ export default function Nav() {
         <div className='hidden lg:block'></div>
         <div className='hidden gap-2 lg:flex'>
           {userInfo ? (
-            <Button
-              onClick={logoutHandler}
-              variant='text'
-              size='sm'
-              color='blue-gray'
-            >
-              Logout
-            </Button>
+            <>
+              <Button
+                onClick={logoutHandler}
+                variant='text'
+                size='sm'
+                color='blue-gray'
+              >
+                Logout
+              </Button>
+
+              <Link to='/add-book'>
+                <Button variant='gradient' size='sm'>
+                  Add Book
+                </Button>
+              </Link>
+            </>
           ) : (
             <>
               <Link to='/login'>
