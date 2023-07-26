@@ -34,6 +34,27 @@ export const booksApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['books'],
     }),
+    deleteBook: builder.mutation({
+      query: ({ booksId, accessToken }) => ({
+        url: `${BOOKS_URL}/${booksId}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: accessToken,
+        },
+      }),
+      invalidatesTags: ['books'],
+    }),
+    updateBook: builder.mutation({
+      query: ({ data, accessToken }) => ({
+        url: `${BOOKS_URL}/${data.booksId}`,
+        method: 'PATCH',
+        body: data,
+        headers: {
+          Authorization: accessToken,
+        },
+      }),
+      invalidatesTags: ['books'],
+    }),
   }),
 })
 
@@ -41,4 +62,6 @@ export const {
   useGetBooksQuery,
   useGetBooksDetailsQuery,
   useCreateBookMutation,
+  useDeleteBookMutation,
+  useUpdateBookMutation,
 } = booksApiSlice
