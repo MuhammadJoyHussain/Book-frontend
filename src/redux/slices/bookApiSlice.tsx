@@ -8,9 +8,10 @@ export type GetBooksResponse = {
 
 export const booksApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getBooks: builder.query<GetBooksResponse, void>({
-      query: () => ({
+    getBooks: builder.query({
+      query: ({ searchTerm, pageNumber }) => ({
         url: BOOKS_URL,
+        params: { searchTerm, pageNumber },
       }),
       keepUnusedDataFor: 5,
     }),
