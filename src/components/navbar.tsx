@@ -49,7 +49,7 @@ export default function Nav() {
           variant='h6'
           className='mr-4 cursor-pointer py-1.5 lg:ml-2'
         >
-          Material Tailwind
+          Book
         </Typography>
         <div className='hidden lg:block'></div>
         <div className='hidden gap-2 lg:flex'>
